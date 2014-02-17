@@ -1,0 +1,16 @@
+{
+    "optimizations": {
+        "static-type-inference": true,
+        "static-type-inference-second-pass": true,
+        "local-context-pass": true,
+        "constant-folding": true,
+        "static-constant-class-folding": true,
+        "private-internal-methods": true
+    },
+    "namespace": "myapp",
+    "name": "myapp",
+    "description": "",
+    "author": "",
+    "version": "0.0.1",
+    "verbose": false
+}
