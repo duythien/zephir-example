@@ -13,3 +13,4 @@ We model an electron initially localized in space at x = 5 whit momentum $k_0$ (
 
 Your problem is to determine the wave function for all later times. The behavior of this wave packet when confined to an harmonic oscillator potential 
 
+Reading tutorial here http://www.sitepoint.com/getting-started-php-extension-development-via-zephir/
