@@ -15,5 +15,5 @@ ZEPHIR_INIT_FUNCS(myapp_normalizechars_method_entry) {
 	PHP_ME(Myapp_NormalizeChars, testCast1, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Myapp_NormalizeChars, testCast2, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Myapp_NormalizeChars, trans, arginfo_myapp_normalizechars_trans, ZEND_ACC_PUBLIC)
-	PHP_FE_END
+  PHP_FE_END
 };

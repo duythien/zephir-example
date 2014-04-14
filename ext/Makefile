@@ -1,17 +1,17 @@
-srcdir = /home/opensue/myapp/zephir-example/ext
-builddir = /home/opensue/myapp/zephir-example/ext
-top_srcdir = /home/opensue/myapp/zephir-example/ext
-top_builddir = /home/opensue/myapp/zephir-example/ext
-EGREP = /bin/grep -E
-SED = /bin/sed
-CONFIGURE_COMMAND = './configure' '--enable-myapp'
-CONFIGURE_OPTIONS = '--enable-myapp'
+srcdir = /home/duythien/git/myapp/ext
+builddir = /home/duythien/git/myapp/ext
+top_srcdir = /home/duythien/git/myapp/ext
+top_builddir = /home/duythien/git/myapp/ext
+EGREP = /usr/bin/grep -E
+SED = /usr/bin/sed
+CONFIGURE_COMMAND = './configure'
+CONFIGURE_OPTIONS =
 SHLIB_SUFFIX_NAME = so
 SHLIB_DL_SUFFIX_NAME = so
 ZEND_EXT_TYPE = zend_extension
 RE2C = re2c
 AWK = gawk
-shared_objects_myapp = myapp.lo kernel/main.lo kernel/memory.lo kernel/exception.lo kernel/hash.lo kernel/debug.lo kernel/backtrace.lo kernel/object.lo kernel/array.lo kernel/extended/array.lo kernel/string.lo kernel/fcall.lo kernel/require.lo kernel/alternative/fcall.lo kernel/file.lo kernel/operators.lo kernel/concat.lo kernel/variables.lo myapp/normalizechars.lo myapp/quantum.lo
+shared_objects_myapp = myapp.lo kernel/main.lo kernel/memory.lo kernel/exception.lo kernel/hash.lo kernel/debug.lo kernel/backtrace.lo kernel/object.lo kernel/array.lo kernel/extended/array.lo kernel/string.lo kernel/fcall.lo kernel/require.lo kernel/file.lo kernel/operators.lo kernel/concat.lo kernel/variables.lo kernel/filter.lo myapp/normalizechars.lo myapp/quantum.lo
 PHP_PECL_EXTENSION = myapp
 PHP_MODULES = $(phplibdir)/myapp.la
 PHP_ZEND_EX =
@@ -21,26 +21,26 @@ prefix = /usr
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
 prefix = /usr
-phplibdir = /home/opensue/myapp/zephir-example/ext/modules
-phpincludedir = /usr/include/php5
-CC = gcc
-CFLAGS = -O2
+phplibdir = /home/duythien/git/myapp/ext/modules
+phpincludedir = /usr/include/php
+CC = cc
+CFLAGS = -g -O2
 CFLAGS_CLEAN = $(CFLAGS)
-CPP = gcc -E
+CPP = cc -E
 CPPFLAGS = -DHAVE_CONFIG_H
 CXX =
 CXXFLAGS =
 CXXFLAGS_CLEAN = $(CXXFLAGS)
-EXTENSION_DIR = /usr/lib/php5/20121212
-PHP_EXECUTABLE = NONE
+EXTENSION_DIR = /usr/lib/php/modules
+PHP_EXECUTABLE = /usr/bin/php
 EXTRA_LDFLAGS =
 EXTRA_LIBS =
-INCLUDES = -I/usr/include/php5 -I/usr/include/php5/main -I/usr/include/php5/TSRM -I/usr/include/php5/Zend -I/usr/include/php5/ext -I/usr/include/php5/ext/date/lib -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+INCLUDES = -I/usr/include/php -I/usr/include/php/main -I/usr/include/php/TSRM -I/usr/include/php/Zend -I/usr/include/php/ext -I/usr/include/php/ext/date/lib
 LFLAGS =
 LDFLAGS =
 SHARED_LIBTOOL =
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-SHELL = /bin/bash
+SHELL = /bin/sh
 INSTALL_HEADERS =
 mkinstalldirs = $(top_srcdir)/build/shtool mkdir -p
 INSTALL = $(top_srcdir)/build/shtool install -c
@@ -159,6 +159,7 @@ clean:
 	find . -name \*.la -o -name \*.a | xargs rm -f 
 	find . -name \*.so | xargs rm -f
 	find . -name .libs -a -type d|xargs rm -rf
+	find . -name \*.1 | xargs rm -f
 	rm -f libphp$(PHP_MAJOR_VERSION).la $(SAPI_CLI_PATH) $(SAPI_CGI_PATH) $(SAPI_MILTER_PATH) $(SAPI_LITESPEED_PATH) $(SAPI_FPM_PATH) $(OVERALL_TARGET) modules/* libs/*
 
 distclean: clean
@@ -176,46 +177,46 @@ distclean: clean
 
 .PHONY: all clean install distclean test
 .NOEXPORT:
-myapp.lo: /home/opensue/myapp/zephir-example/ext/myapp.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/myapp.c -o myapp.lo 
-kernel/main.lo: /home/opensue/myapp/zephir-example/ext/kernel/main.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/main.c -o kernel/main.lo 
-kernel/memory.lo: /home/opensue/myapp/zephir-example/ext/kernel/memory.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/memory.c -o kernel/memory.lo 
-kernel/exception.lo: /home/opensue/myapp/zephir-example/ext/kernel/exception.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/exception.c -o kernel/exception.lo 
-kernel/hash.lo: /home/opensue/myapp/zephir-example/ext/kernel/hash.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/hash.c -o kernel/hash.lo 
-kernel/debug.lo: /home/opensue/myapp/zephir-example/ext/kernel/debug.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/debug.c -o kernel/debug.lo 
-kernel/backtrace.lo: /home/opensue/myapp/zephir-example/ext/kernel/backtrace.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/backtrace.c -o kernel/backtrace.lo 
-kernel/object.lo: /home/opensue/myapp/zephir-example/ext/kernel/object.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/object.c -o kernel/object.lo 
-kernel/array.lo: /home/opensue/myapp/zephir-example/ext/kernel/array.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/array.c -o kernel/array.lo 
-kernel/extended/array.lo: /home/opensue/myapp/zephir-example/ext/kernel/extended/array.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/extended/array.c -o kernel/extended/array.lo 
-kernel/string.lo: /home/opensue/myapp/zephir-example/ext/kernel/string.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/string.c -o kernel/string.lo 
-kernel/fcall.lo: /home/opensue/myapp/zephir-example/ext/kernel/fcall.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/fcall.c -o kernel/fcall.lo 
-kernel/require.lo: /home/opensue/myapp/zephir-example/ext/kernel/require.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/require.c -o kernel/require.lo 
-kernel/alternative/fcall.lo: /home/opensue/myapp/zephir-example/ext/kernel/alternative/fcall.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/alternative/fcall.c -o kernel/alternative/fcall.lo 
-kernel/file.lo: /home/opensue/myapp/zephir-example/ext/kernel/file.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/file.c -o kernel/file.lo 
-kernel/operators.lo: /home/opensue/myapp/zephir-example/ext/kernel/operators.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/operators.c -o kernel/operators.lo 
-kernel/concat.lo: /home/opensue/myapp/zephir-example/ext/kernel/concat.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/concat.c -o kernel/concat.lo 
-kernel/variables.lo: /home/opensue/myapp/zephir-example/ext/kernel/variables.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/kernel/variables.c -o kernel/variables.lo 
-myapp/normalizechars.lo: /home/opensue/myapp/zephir-example/ext/myapp/normalizechars.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/myapp/normalizechars.c -o myapp/normalizechars.lo 
-myapp/quantum.lo: /home/opensue/myapp/zephir-example/ext/myapp/quantum.c
-	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/opensue/myapp/zephir-example/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/opensue/myapp/zephir-example/ext/myapp/quantum.c -o myapp/quantum.lo 
+myapp.lo: /home/duythien/git/myapp/ext/myapp.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/myapp.c -o myapp.lo 
+kernel/main.lo: /home/duythien/git/myapp/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /home/duythien/git/myapp/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /home/duythien/git/myapp/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/hash.lo: /home/duythien/git/myapp/ext/kernel/hash.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/hash.c -o kernel/hash.lo 
+kernel/debug.lo: /home/duythien/git/myapp/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /home/duythien/git/myapp/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /home/duythien/git/myapp/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /home/duythien/git/myapp/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/array.c -o kernel/array.lo 
+kernel/extended/array.lo: /home/duythien/git/myapp/ext/kernel/extended/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/extended/array.c -o kernel/extended/array.lo 
+kernel/string.lo: /home/duythien/git/myapp/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /home/duythien/git/myapp/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/require.lo: /home/duythien/git/myapp/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /home/duythien/git/myapp/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /home/duythien/git/myapp/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/concat.lo: /home/duythien/git/myapp/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /home/duythien/git/myapp/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /home/duythien/git/myapp/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/kernel/filter.c -o kernel/filter.lo 
+myapp/normalizechars.lo: /home/duythien/git/myapp/ext/myapp/normalizechars.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/myapp/normalizechars.c -o myapp/normalizechars.lo 
+myapp/quantum.lo: /home/duythien/git/myapp/ext/myapp/quantum.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/home/duythien/git/myapp/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /home/duythien/git/myapp/ext/myapp/quantum.c -o myapp/quantum.lo 
 $(phplibdir)/myapp.la: ./myapp.la
 	$(LIBTOOL) --mode=install cp ./myapp.la $(phplibdir)
 

@@ -23,7 +23,6 @@ ZEPHIR_INIT_CLASS(Myapp_NormalizeChars) {
 
 	ZEPHIR_REGISTER_CLASS(Myapp, NormalizeChars, myapp, normalizechars, myapp_normalizechars_method_entry, 0);
 
-
 	return SUCCESS;
 
 }
@@ -44,6 +43,8 @@ PHP_METHOD(Myapp_NormalizeChars, testCast2) {
 
 PHP_METHOD(Myapp_NormalizeChars, trans) {
 
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_0 = NULL;
 	zval *s, *replace;
 
 	ZEPHIR_MM_GROW();
@@ -52,7 +53,7 @@ PHP_METHOD(Myapp_NormalizeChars, trans) {
 
 
 	ZEPHIR_INIT_VAR(replace);
-	array_init_size(replace, 135);
+	array_init_size(replace, 173);
 	add_assoc_stringl_ex(replace, SS("ế"), SL("e"), 1);
 	add_assoc_stringl_ex(replace, SS("ề"), SL("e"), 1);
 	add_assoc_stringl_ex(replace, SS("ể"), SL("e"), 1);
@@ -187,7 +188,8 @@ PHP_METHOD(Myapp_NormalizeChars, trans) {
 	add_assoc_stringl_ex(replace, SS("ă"), SL("a"), 1);
 	add_assoc_stringl_ex(replace, SS("à"), SL("a"), 1);
 	add_assoc_stringl_ex(replace, SS("á"), SL("a"), 1);
-	zephir_call_func_p2(return_value, "strtr", s, replace);
+	ZEPHIR_RETURN_CALL_FUNCTION("strtr", &_0, s, replace);
+	zephir_check_call_status();
 	RETURN_MM();
 
 }

@@ -2,8 +2,5 @@
 #
 # Created by configure
 
-CFLAGS='-O2' \
-CC='gcc' \
 './configure' \
-'--enable-myapp' \
 "$@"

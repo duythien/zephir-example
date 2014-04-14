@@ -42,11 +42,31 @@ void zephir_throw_exception(zval *object TSRMLS_DC){
 }
 
 /**
- * Throws an exception with a single string parameter
+ * Throws a zval object as exception
  */
-void zephir_throw_exception_string(zend_class_entry *ce, const char *message, zend_uint message_len TSRMLS_DC){
+void zephir_throw_exception_debug(zval *object, const char *file, zend_uint line TSRMLS_DC){
+
+	zend_class_entry *default_exception_ce;
+
+	Z_ADDREF_P(object);
+
+	if (line > 0) {
+		default_exception_ce = zend_exception_get_default(TSRMLS_C);
+		zend_update_property_string(default_exception_ce, object, "file", sizeof("file")-1, file TSRMLS_CC);
+		zend_update_property_long(default_exception_ce, object, "line", sizeof("line")-1, line TSRMLS_CC);
+	}
+
+	zend_throw_exception_object(object TSRMLS_CC);
+}
+
+/**
+ * Throws an exception with a single string parameter + debug info
+ */
+void zephir_throw_exception_string_debug(zend_class_entry *ce, const char *message, zend_uint message_len, const char *file, zend_uint line TSRMLS_DC) {
 
 	zval *object, *msg;
+	int ZEPHIR_LAST_CALL_STATUS = 0;
+	zend_class_entry *default_exception_ce;
 
 	ALLOC_INIT_ZVAL(object);
 	object_init_ex(object, ce);
@@ -54,7 +74,36 @@ void zephir_throw_exception_string(zend_class_entry *ce, const char *message, ze
 	ALLOC_INIT_ZVAL(msg);
 	ZVAL_STRINGL(msg, message, message_len, 1);
 
-	zephir_call_method_p1_noret(object, "__construct", msg);
+	ZEPHIR_CALL_METHOD(NULL, object, "__construct", NULL, msg);
+	zephir_check_call_status();
+
+	if (line > 0) {
+		default_exception_ce = zend_exception_get_default(TSRMLS_C);
+		zend_update_property_string(default_exception_ce, object, "file", sizeof("file")-1, file TSRMLS_CC);
+		zend_update_property_long(default_exception_ce, object, "line", sizeof("line")-1, line TSRMLS_CC);
+	}
+
+	zend_throw_exception_object(object TSRMLS_CC);
+
+	zval_ptr_dtor(&msg);
+}
+
+/**
+ * Throws an exception with a single string parameter
+ */
+void zephir_throw_exception_string(zend_class_entry *ce, const char *message, zend_uint message_len TSRMLS_DC){
+
+	zval *object, *msg;
+	int ZEPHIR_LAST_CALL_STATUS = 0;
+
+	ALLOC_INIT_ZVAL(object);
+	object_init_ex(object, ce);
+
+	ALLOC_INIT_ZVAL(msg);
+	ZVAL_STRINGL(msg, message, message_len, 1);
+
+	ZEPHIR_CALL_METHOD(NULL, object, "__construct", NULL, msg);
+	zephir_check_call_status();
 
 	zend_throw_exception_object(object TSRMLS_CC);
 
@@ -64,49 +113,41 @@ void zephir_throw_exception_string(zend_class_entry *ce, const char *message, ze
 /**
  * Throws an exception with a single zval parameter
  */
-void zephir_throw_exception_zval(zend_class_entry *ce, zval *message TSRMLS_DC){
+void zephir_throw_exception_zval_debug(zend_class_entry *ce, zval *message, const char *file, zend_uint line TSRMLS_DC){
 
 	zval *object;
+	int ZEPHIR_LAST_CALL_STATUS = 0;
+	zend_class_entry *default_exception_ce;
 
 	ALLOC_INIT_ZVAL(object);
 	object_init_ex(object, ce);
 
-	zephir_call_method_p1_noret(object, "__construct", message);
+	ZEPHIR_CALL_METHOD(NULL, object, "__construct", NULL, message);
+	zephir_check_call_status();
+
+	if (line > 0) {
+		default_exception_ce = zend_exception_get_default(TSRMLS_C);
+		zend_update_property_string(default_exception_ce, object, "file", sizeof("file")-1, file TSRMLS_CC);
+		zend_update_property_long(default_exception_ce, object, "line", sizeof("line")-1, line TSRMLS_CC);
+	}
 
 	zend_throw_exception_object(object TSRMLS_CC);
 }
 
 /**
- * Latest version of zend_throw_exception_internal
+ * Throws an exception with a single zval parameter
  */
-void zephir_throw_exception_internal(zval *exception TSRMLS_DC) {
+void zephir_throw_exception_zval(zend_class_entry *ce, zval *message TSRMLS_DC){
 
-	if (exception != NULL) {
-		zval *previous = EG(exception);
-		zend_exception_set_previous(exception, EG(exception) TSRMLS_CC);
-		EG(exception) = exception;
-		if (previous) {
-			return;
-		}
-	}
+	zval *object;
+	int ZEPHIR_LAST_CALL_STATUS = 0;
 
-	if (!EG(current_execute_data)) {
-		if (EG(exception)) {
-			zend_exception_error(EG(exception), E_ERROR TSRMLS_CC);
-		}
-		zend_error(E_ERROR, "Exception thrown without a stack frame");
-	}
+	ALLOC_INIT_ZVAL(object);
+	object_init_ex(object, ce);
 
-	if (zend_throw_exception_hook) {
-    	zend_throw_exception_hook(exception TSRMLS_CC);
-	}
+	ZEPHIR_CALL_METHOD(NULL, object, "__construct", NULL, message);
+	zephir_check_call_status();
 
-	if (EG(current_execute_data)->opline == NULL ||
-    	(EG(current_execute_data)->opline + 1)->opcode == ZEND_HANDLE_EXCEPTION) {
-		/* no need to rethrow the exception */
-		return;
-	}
-	EG(opline_before_exception) = EG(current_execute_data)->opline;
-	EG(current_execute_data)->opline = EG(exception_op);
-
+	zend_throw_exception_object(object TSRMLS_CC);
 }
+

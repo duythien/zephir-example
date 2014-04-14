@@ -2,7 +2,7 @@ PHP_ARG_ENABLE(myapp, whether to enable myapp, [ --enable-myapp   Enable Myapp])
 
 if test "$PHP_MYAPP" = "yes"; then
 	AC_DEFINE(HAVE_MYAPP, 1, [Whether you have Myapp])
-	myapp_sources="myapp.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/alternative/fcall.c kernel/file.c kernel/operators.c kernel/concat.c kernel/variables.c myapp/normalizechars.c myapp/quantum.c "
+	myapp_sources="myapp.c kernel/main.c kernel/memory.c kernel/exception.c kernel/hash.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/extended/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/concat.c kernel/variables.c kernel/filter.c myapp/normalizechars.c myapp/quantum.c "
 	PHP_NEW_EXTENSION(myapp, $myapp_sources, $ext_shared)
 
 	old_CPPFLAGS=$CPPFLAGS

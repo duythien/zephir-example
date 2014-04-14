@@ -13,5 +13,5 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(myapp_quantum_method_entry) {
 	PHP_ME(Myapp_Quantum, Harmos, arginfo_myapp_quantum_harmos, ZEND_ACC_PUBLIC)
 	PHP_ME(Myapp_Quantum, test, NULL, ZEND_ACC_PUBLIC)
-	PHP_FE_END
+  PHP_FE_END
 };
